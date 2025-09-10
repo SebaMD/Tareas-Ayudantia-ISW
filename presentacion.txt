@@ -1,0 +1,8 @@
+Nombre: Sebastian Edmundo Medina Zapata
+
+Carrera: Ingenieria de ejecucion en compuation e informatica (IECI)
+
+Expectativas: En este ramo espero aprender mejores las distintas metodologías y herramientas para el desarrollo de proyectos de software, 
+            tanto la planificación como la construcción de aplicaciones. Además espero comprender y aplicar bien lo que aprenda sobre
+            frontend y backend en el desarrollo web, para luego integrarlos en el proyecto grupal que por lo que se sera subido en un entorno 
+            real, para que cualquier persona pueda acceder a la pagina en linea.
