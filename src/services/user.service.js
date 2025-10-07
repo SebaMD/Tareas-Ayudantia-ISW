@@ -19,6 +19,23 @@ export async function findUserByEmail(email) {
   return await userRepository.findOneBy({ email });
 }
 
+export async function getUserService({ id }) {
+  try {
+    const user = await userRepository.findOne({
+      where: { id },
+      attributes: ["id", "email", "created_at", "updated_at"],
+    });
+
+    if(!user) {
+      throw new Error("Credenciales incorrectas");
+    }
+
+    return [user, null];
+  } catch (error) {
+    return [null, error.message];
+  }
+}
+
 export async function updateUserService(id, data) {
   const user = await userRepository.findOne({ where: { id } });
   if (!user) {
