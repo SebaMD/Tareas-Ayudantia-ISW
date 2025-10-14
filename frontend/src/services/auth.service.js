@@ -1,6 +1,5 @@
 import axios from './root.service.js';
 import cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 
 export async function login(dataUser) {
     try {
@@ -12,7 +11,7 @@ export async function login(dataUser) {
         
         const { token, user } = response.data.data;
         
-        cookies.set('jwt-auth', token, { path: '/' });
+        cookies.set('jwt-auth', token, { path: '/', });
         sessionStorage.setItem('usuario', JSON.stringify(user));
         
         return response.data;

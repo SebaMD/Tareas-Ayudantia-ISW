@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
+import Logout from '@pages/Logout';
 import Home from '@pages/Home';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
-import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 
 const router = createBrowserRouter([
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Login />
+      },
+      {
+        path: '/logout',
+        element: <Logout/>
       },
       {
         path: '/auth',

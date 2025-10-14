@@ -28,7 +28,7 @@ import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers
       const orderedUser = {
         id: userData.id,
         email: userData.email,
-        password: userData.password,
+        password: password,
         created_at: userData.created_at,
         updated_at: userData.updated_at,
       };

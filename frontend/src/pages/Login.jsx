@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../services/auth.service.js';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -8,8 +9,24 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        try{
+            const result = await login({ email, password });
+
+            if(result.data?.token) {
+                navigate('/home');
+            }else{
+                alert(result.message || 'Error al iniciar sesion');
+            }
+        }catch(error){
+            console.error('Login error:', error);
+            alert('Error inesperado al iniciar sesión');
+        }
+
         console.log({ email, password });
-    };    return (
+    };
+
+    return (
         <div className="min-h-screen bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md transform transition-all hover:scale-105">
                 <form className="space-y-6" onSubmit={handleSubmit}>
