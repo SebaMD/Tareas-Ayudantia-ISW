@@ -1,6 +1,5 @@
 import { Router } from "express";
 import authRoutes from "./auth.routes.js";
-import profileRoutes from "./profile.routes.js";
 import userRoutes from "./user.routes.js";
 
 export function routerApi(app) {
@@ -8,6 +7,5 @@ export function routerApi(app) {
   app.use("/api", router);
 
   router.use("/auth", authRoutes);
-  router.use("/profile", profileRoutes);
   router.use("/user", userRoutes);  
 }

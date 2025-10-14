@@ -23,7 +23,7 @@ export async function getUserService({ id }) {
   try {
     const user = await userRepository.findOne({
       where: { id },
-      attributes: ["id", "email", "created_at", "updated_at"],
+      attributes: ["id", "email", "password","created_at", "updated_at"],
     });
 
     if(!user) {
@@ -56,12 +56,16 @@ export async function updateUserService(id, data) {
 }
 
 export async function deleteUserService(id) {
-  const user = await userRepository.findOne({ where: { id } });
+  try {  
+    const user = await userRepository.findOne({ where: { id } });
 
-  if (!user) {
-    throw new Error("Credenciales incorrectas"); 
+    if (!user) {
+      throw new Error("Credenciales incorrectas"); 
+    }
+
+    await userRepository.remove(user);
+    return [user, null];
+  }catch(error) { 
+    return [null, error.message];
   }
-
-  await userRepository.remove(user);
-  return user;
 }

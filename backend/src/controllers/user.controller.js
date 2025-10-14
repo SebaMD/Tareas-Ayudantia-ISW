@@ -16,20 +16,9 @@ import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers
   export async function getUserById(req, res) {
     try {
 
-      const tokenUserId = req.user.sub;
-      const numericId = Number(req.params.id);
+      const userId = req.user.sub;
 
-      const { error } = userQueryValidation.validate({ id:numericId });
-
-      if (error) {
-        return handleErrorClient(res, 400, "Parametros de consulta invalidos.", error.message);
-      }
-
-      if (numericId !== tokenUserId) {
-        return handleErrorClient(res, 403, "No tienes permiso para ver los datos de otro usuario.");
-      }
-
-      const [user, errorUser] = await getUserService({ id:numericId });
+      const [user, errorUser] = await getUserService({ id: userId });
 
       if (errorUser){
         return handleErrorClient(res, 404, "Error al obtener el Usuario", errorUser);
@@ -39,6 +28,7 @@ import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers
       const orderedUser = {
         id: userData.id,
         email: userData.email,
+        password: password,
         created_at: userData.created_at,
         updated_at: userData.updated_at,
       };
@@ -74,16 +64,31 @@ import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers
 
   export async function deleteUserById(req, res) {
     try {
-      const userId = req.user.sub;
-      const deleteUser = await deleteUserService(userId);
+      const tokenUserId = req.user.sub;
+      const numericId = Number(req.params.id);
+      const { error } = userQueryValidation.validate({ id: numericId });
+      
+      if (error) {
+      return handleErrorClient(res, 400, "Parámetros de consulta inválidos.", error.message);
+      }
+
+      if (numericId !== tokenUserId) {
+      return handleErrorClient(res, 403, "No tienes permiso para eliminar la cuenta de otro usuario.");
+      }
+
+      const [deleteUser, errorUser] = await deleteUserService(numericId);
+
+      if(errorUser) {
+        return handleErrorClient(res, 404, "Error al eliminar el Usuario", errorUser);
+      }
 
       if (!deleteUser) {
         return handleErrorClient(res, 404, "Usuario no encontrado.");
       }
 
-      handleSuccess(res, 200, "Usuario eliminado exitosamente exitosamente", {id: userId});
+      handleSuccess(res, 200, "Usuario eliminado exitosamente exitosamente", {id: numericId});
     } catch (error) {
-      handleErrorServer(res, 500, "Error al obtener el Usuario", error.message);
+      handleErrorServer(res, 500, "Error al eliminar el Usuario.", error.message);
     }
   }
 

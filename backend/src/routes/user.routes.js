@@ -6,8 +6,8 @@ const router = Router();
 
 router.use(authMiddleware);
 
-router.get("/profile/private/:id", getUserById);
+router.get("/profile/private", getUserById);
 router.patch("/profile/private", updateUserById);
-router.delete("/profile/private", deleteUserById);
+router.delete("/profile/private/:id", deleteUserById);
 
 export default router;
