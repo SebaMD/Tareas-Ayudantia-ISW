@@ -6,6 +6,7 @@ import Home from '@pages/Home';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
 import '@styles/styles.css';
+import Register from '@pages/Register';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home />
+      },
+      {
+        path: '/register',
+        element: <Register/>
       }
     ]
   }
