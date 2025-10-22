@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service.js';
+import { showErrorAlert } from '../helpers/sweetAlert.js';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -16,11 +17,11 @@ const Login = () => {
             if(result.data?.token) {
                 navigate('/home');
             }else{
-                alert(result.message || 'Error al iniciar sesion');
+                showErrorAlert("Credenciales incorrectas", result.message || "Error al iniciar sesion");
             }
         }catch(error){
             console.error('Login error:', error);
-            alert('Error inesperado al iniciar sesión');
+            showErrorAlert("Error", result.message || "Error al iniciar sesion");
         }
 
         console.log({ email, password });
@@ -70,6 +71,16 @@ const Login = () => {
                     >
                         Iniciar sesión
                     </button>
+
+                    <p className='text-center text-gray-600 text-sm mt-6'>
+                        ¿No tienes una cuenta?{' '}
+                        <span
+                            onClick={() => navigate('/register')}
+                            className='text-purple-600 font-semibold hover:underLine cursor-pointer'
+                        >
+                            Registrate aqui
+                        </span>
+                    </p>
                 </form>
             </div>
         </div>
